@@ -183,24 +183,18 @@ jobs:
     needs: check_source
     if: needs.check_source.outputs.run_tests == 'true'
     uses: ./.github/workflows/reusable-build-win-32.yml
-    with:
-      config_hash: ${{ needs.check_source.outputs.config_hash }}
 
   build_win_amd64:
     name: 'Windows (x64)'
     needs: check_source
     if: needs.check_source.outputs.run_tests == 'true'
     uses: ./.github/workflows/reusable-build-win-amd64.yml
-    with:
-      config_hash: ${{ needs.check_source.outputs.config_hash }}
 
   build_win_arm64:
     name: 'Windows (arm64)'
     needs: check_source
     if: needs.check_source.outputs.run_tests == 'true'
     uses: ./.github/workflows/reusable-build-win-arm64.yml
-    with:
-      config_hash: ${{ needs.check_source.outputs.config_hash }}
 
   build_macos:
     name: 'macOS'

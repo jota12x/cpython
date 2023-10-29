@@ -1,9 +1,5 @@
 on:
   workflow_call:
-    inputs:
-      config_hash:
-        required: true
-        type: string
 
 jobs:
   build_win_amd64:
