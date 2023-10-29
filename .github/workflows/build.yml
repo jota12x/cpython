@@ -178,23 +178,10 @@ jobs:
         if: github.event_name == 'pull_request'  # $GITHUB_EVENT_NAME
         run: make check-c-globals
 
-  build_win32:
-    name: 'Windows (x86)'
+  build_win:
     needs: check_source
     if: needs.check_source.outputs.run_tests == 'true'
-    uses: ./.github/workflows/reusable-build-win-32.yml
-
-  build_win_amd64:
-    name: 'Windows (x64)'
-    needs: check_source
-    if: needs.check_source.outputs.run_tests == 'true'
-    uses: ./.github/workflows/reusable-build-win-amd64.yml
-
-  build_win_arm64:
-    name: 'Windows (arm64)'
-    needs: check_source
-    if: needs.check_source.outputs.run_tests == 'true'
-    uses: ./.github/workflows/reusable-build-win-arm64.yml
+    uses: ./.github/workflows/reusable-build-win.yml
 
   build_macos:
     name: 'macOS'
@@ -563,9 +550,7 @@ jobs:
     - check_source  # Transitive dependency, needed to access `run_tests` value
     - check-docs
     - check_generated_files
-    - build_win32
-    - build_win_amd64
-    - build_win_arm64
+    - build_win
     - build_macos
     - build_ubuntu
     - build_ubuntu_ssltests
