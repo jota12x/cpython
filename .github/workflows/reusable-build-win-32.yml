@@ -1,0 +1,27 @@
+# gh-84728: "paths-ignore" is not used to skip documentation-only PRs, because
+# it prevents to mark a job as mandatory. A PR cannot be merged if a job is
+# mandatory but not scheduled because of "paths-ignore".
+on:
+  workflow_call:
+    inputs:
+      config_hash:
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  build_win_32:
+    runs-on: windows-latest
+    timeout-minutes: 60
+    env:
+      IncludeUwp: 'true'
+    steps:
+    - uses: actions/checkout@v4
+    - name: Build CPython
+      run: .\PCbuild\build.bat -e -d -p Win32
+    - name: Display build info
+      run: .\python.bat -m test.pythoninfo
+    - name: Tests
+      run: .\PCbuild\rt.bat -p Win32 -d -q --fast-ci
